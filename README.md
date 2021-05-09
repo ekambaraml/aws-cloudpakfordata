@@ -54,6 +54,25 @@ On Bastion Host
 #### 3.8 Create/Identify VPC and Subnets
   
   - VPC should have "EnableDnsSupport=true, EnableDnsHostnames=true"
+  - Need 1 'public' and 1 'private' subnet for each AZ desired.  Note that the check for 'private' subnet is if route table for subnet has an internet gateway.
+  
+#### 3.9 Create the following endpoints in private subnets
+  - s3 gateway (add to private subnet route table)
+  - elb endpoint
+  - ebs endpoint
+  - lambda endpoint
+  - ec2 endpoint
+  - create a security group that allows 443 from subnets inbound and assign to all endpoints
+
+#### 3.10 Create route53 and load balancer resources in VPC
+  Create a base domain in route53 to use the following cloudformation template.  Use domain configured for cluster to create a private route 53 domain, no content needed
+- I also found that I needed to use a bastion that had access to external apis in GovCloud (not all endpoint available in my config to private bastion).  In customer's environment, this may need to be handled
+
+
+
+
+
+
 
   
 
