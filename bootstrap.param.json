@@ -1,0 +1,50 @@
+[
+  {
+    "ParameterKey": "InfrastructureName",
+    "ParameterValue": "os46priv-84fq6"
+  },
+  {
+    "ParameterKey": "RhcosAmi",
+    "ParameterValue": "ami-6e2a100f"
+  },
+  {
+    "ParameterKey": "AllowedBootstrapSshCidr",
+    "ParameterValue": "0.0.0.0/0"
+  },
+  {
+    "ParameterKey": "PublicSubnet",
+    "ParameterValue": "subnet-009bbf390b6d3b810"
+  },
+  {
+    "ParameterKey": "MasterSecurityGroupId",
+    "ParameterValue": "sg-0a7d9941281033cd1"
+  },
+  {
+    "ParameterKey": "VpcId",
+    "ParameterValue": "vpc-057d2960"
+  },
+  {
+    "ParameterKey": "BootstrapIgnitionLocation",
+    "ParameterValue": "s3://os46priv-infra/bootstrap.ign"
+  },
+  {
+    "ParameterKey": "AutoRegisterELB",
+    "ParameterValue": "yes"
+  },
+  {
+    "ParameterKey": "RegisterNlbIpTargetsLambdaArn",
+    "ParameterValue": "arn:aws-us-gov:lambda:us-gov-west-1:069490698157:function:os46priv-network-RegisterNlbIpTargets-19Y9F7I12QHVC"
+  },
+  {
+    "ParameterKey": "ExternalApiTargetGroupArn",
+    "ParameterValue": "arn:aws-us-gov:elasticloadbalancing:us-gov-west-1:069490698157:targetgroup/os46p-Exter-12WKLHSKDO5OI/7d985f066ab7ed0c"
+  },
+  {
+    "ParameterKey": "InternalApiTargetGroupArn",
+    "ParameterValue": "arn:aws-us-gov:elasticloadbalancing:us-gov-west-1:069490698157:targetgroup/os46p-Inter-DGDKVVOVR2DS/106c0321ea51f7c9"
+  },
+  {
+    "ParameterKey": "InternalServiceTargetGroupArn",
+    "ParameterValue": "arn:aws-us-gov:elasticloadbalancing:us-gov-west-1:069490698157:targetgroup/os46p-Inter-1C50FH33KJ83T/46a827ffe4049c4f"
+  }
+]
