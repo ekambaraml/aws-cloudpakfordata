@@ -1,0 +1,77 @@
+apiVersion: v1
+baseDomain: ibmcp4d.com
+credentialsMode: Mint
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  platform:
+    aws:
+      zones:
+      - us-gov-west-1a
+      - us-gov-west-1b
+      - us-gov-west-1c
+      rootVolume:
+        iops: 4000
+        size: 500
+        type: io1
+      type: m5.xlarge
+  replicas: 3
+compute:
+- hyperthreading: Enabled
+  name: worker
+  platform:
+    aws:
+      rootVolume:
+        iops: 2000
+        size: 500
+        type: io1
+      type: m5.4xlarge
+      zones:
+      - us-gov-west-1a
+      - us-gov-west-1b
+      - us-gov-west-1c
+  replicas: 2
+metadata:
+  name: os46priv
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 172.31.10.0/24
+  - cidr: 172.31.11.0/24
+  - cidr: 172.31.12.0/24
+  - cidr: 172.31.20.0/24
+  - cidr: 172.31.21.0/24
+  - cidr: 172.31.22.0/24
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  aws:
+    region: us-gov-west-1
+    userTags:
+      cluster: os46priv
+    subnets:
+    - subnet-07a756dc71942bf08
+    - subnet-077e0aa9ce666893d
+    - subnet-009bbf390b6d3b810
+    - subnet-0afc18a99604c58fb
+    - subnet-004e63335c1587a55
+    - subnet-0576c011af07574f9
+    amiID: ami-6e2a100f
+pullSecret: <pull-secret>
+fips: true
+sshKey: <ssh-key>
+publish: Internal
+additionalTrustBundle: |
+  -----BEGIN CERTIFICATE-----
+  MIIDbTCCAlWgAwIBAgIJAN26IRlLWl0tMA0GCSqGSIb3DQEBCwUAME0xCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJWQTERMA8GA1UEBwwIU3RlcmxpbmcxETAPBgNVBAoMCEdvdkNsb3VkMQswCQYDVQQDDAJDQTAeFw0yMTAzMTUwNDQyNTVaFw0zMTAzMTQwNDQyNTVaME0xCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJWQTERMA8GA1UEBwwIU3RlcmxpbmcxETAPBgNVBAoMCEdvdkNsb3VkMQswCQYDVQQDDAJDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANDMyKV51aZ224MxF4HlQZ1RddPPlic4tRzgW8kFI6jK7CaZoQ1phvsgcrGk/Kg0wl5qm1ACWqcRas+A3EXmYcPBnVfi4wSoFY96nLKE7nytTQVCxETKugywWn4F+nXtMMQvdrDTC8ioNL06wVZtthc0kdH67EK90idC49yYW7efACOuiYKEOW8FCTTjwx8AeFv4obtb+TjXw72pfMB/coz/3JM5/+mUz244h8bo5DCdaAL+PmJSCMcblHPK27Hx9Cumh0VjhSdJoU4mAooQh+SqEohYrL3PdANeD611KZOO1QJzLjLh3yxAj1tf9jIwzAocYRduCoUq/WyZzJN5q3UCAwEAAaNQME4wHQYDVR0OBBYEFEUO75MMsL4pp9idHxAxK0nCQ7QCMB8GA1UdIwQYMBaAFEUO75MMsL4pp9idHxAxK0nCQ7QCMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAF0ewKgLteOj/7dpeyQ+8Dc8rSCGyzl90zikSotMWniQ4bIGynK2JgCJuYiK9hE7eo5IARIqEq52v9PgCC+pkNkvcQdwrUaRQp/+zzJk1tYCMkYe8mpIQraUm6V9dkYc/q6nmMOnveoHYHScXlHpPWHqtmsomDccZY78veO3iQ3JK31D5ko/sByahisNtX5XfnCiufhs0e6aQ9Hv3PeqXC9o74Mu3xBQRVzyxE5fNd+qOq6VdFnJHnpa2zCVSq/+jqE9FkSJ4XjZGg9Ia7UOxgqaVBzrRopaMamPQRG+1OM0irdli1zsq03Yim+5rIT+QA6eocMMK/QZxiu8sapcLkU=
+  -----END CERTIFICATE-----
+imageContentSources:
+- mirrors:
+  - 172.31.10.47:5000/openshift46
+  source: quay.io/openshift-release-dev/ocp-release
+- mirrors:
+  - 172.31.10.47:5000/openshift46
+  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
