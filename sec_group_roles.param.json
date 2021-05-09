@@ -1,0 +1,18 @@
+[
+  {
+    "ParameterKey": "InfrastructureName",
+    "ParameterValue": "os46priv-84fq6"
+  },
+  {
+    "ParameterKey": "VpcCidr",
+    "ParameterValue": "172.31.0.0/16"
+  },
+  {
+    "ParameterKey": "PrivateSubnets",
+    "ParameterValue": "subnet-0afc18a99604c58fb,subnet-004e63335c1587a55,subnet-0576c011af07574f9"
+  },
+  {
+    "ParameterKey": "VpcId",
+    "ParameterValue": "vpc-057d2960"
+  }
+]
