@@ -1,0 +1,74 @@
+[
+  {
+    "ParameterKey": "InfrastructureName",
+    "ParameterValue": "os46priv-84fq6"
+  },
+  {
+    "ParameterKey": "RhcosAmi",
+    "ParameterValue": "ami-6e2a100f"
+  },
+  {
+    "ParameterKey": "AutoRegisterDNS",
+    "ParameterValue": "no"
+  },
+  {
+    "ParameterKey": "PrivateHostedZoneId",
+    "ParameterValue": "Z011918128Z10TVFNX2V5"
+  },
+  {
+    "ParameterKey": "PrivateHostedZoneName",
+    "ParameterValue": "os46priv.rfncloud.com"
+  },
+  {
+    "ParameterKey": "Master0Subnet",
+    "ParameterValue": "subnet-07a756dc71942bf08"
+  },
+  {
+    "ParameterKey": "Master1Subnet",
+    "ParameterValue": "subnet-077e0aa9ce666893d"
+  },
+  {
+    "ParameterKey": "Master2Subnet",
+    "ParameterValue": "subnet-009bbf390b6d3b810"
+  },
+  {
+    "ParameterKey": "MasterSecurityGroupId",
+    "ParameterValue": "sg-0a7d9941281033cd1"
+  },
+  {
+    "ParameterKey": "IgnitionLocation",
+    "ParameterValue": "https://api-int.os46priv.rfncloud.com:22623/config/master"
+  },
+  {
+    "ParameterKey": "CertificateAuthorities",
+    "ParameterValue": "data:text/plain;charset=utf-8;base64,MIIDjDCCAnSgAwIBAgIJAKLfOisJc0zpMA0GCSqGSIb3DQEBCwUAMHsxCzAJBgNVBAYTAlhYMQwwCgYDVQQIDANOL0ExDDAKBgNVBAcMA04vQTEgMB4GA1UECgwXU2VsZi1zaWduZWQgY2VydGlmaWNhdGUxLjAsBgNVBAMMJTE3Mi4zMS4xMC40NzogU2VsZi1zaWduZWQgY2VydGlmaWNhdGUwHhcNMjEwMzA0MjIwMzQzWhcNMzEwMzAyMjIwMzQzWjB7MQswCQYDVQQGEwJYWDEMMAoGA1UECAwDTi9BMQwwCgYDVQQHDANOL0ExIDAeBgNVBAoMF1NlbGYtc2lnbmVkIGNlcnRpZmljYXRlMS4wLAYDVQQDDCUxNzIuMzEuMTAuNDc6IFNlbGYtc2lnbmVkIGNlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvc7pSOwrw9IchdMKFdmhFdgRd9jiJXaxbAgIYwz8fWTraGMoXayOCaVeSPdAfxHCzl6It8fKoiHb0KUD0bMY9opX0jN2JAa0O4jJ1u2Nn0vUHkhLbsmTiF6ZJ5vGvbaPtap7WSMwLD2pL2ZUI4Us8dnMqY5d+BpRweou9+C91NKJpzh9OEmUUO6fcQxFJE1leoQvSW1iyavm9Z5NyYqdjXX7X/8G6QyZ3HUK0bzsbOmn4piDKminxuQGnksx3o01m0ilL8EDM00G0SlfAElbthadpC7xKjxGMmeqo1xKNHl/XKIgMGud95J02S0YDPFVcrFPeteJv/kFEFLEfL2/0QIDAQABoxMwETAPBgNVHREECDAGhwSsHwovMA0GCSqGSIb3DQEBCwUAA4IBAQAIapdu//fq7qy4Qy3wYwkB5ie8B2YAfKtNhc0EYPjxi6JsEMSQfSzkWt5ASinU+xS2GRI9AOBmVO/ZYyPDMze7w73ofBOePt8nGM5mEq/uZ5cJpyqi/ocietEZCFuY2nY58IYXioW8qLUHDYfMsqzq26BPQwrEx+QQF3FAudRf2/RvjamA9ofqJ3BmLuRjrmRcyBYEJw2t79OBe+jtqJmX7gnruLjdE7+xiaN2U0wxW4AWFdCcBBN8k7Oo7DrkAG/Gj9Y8oLDHxGhrGhf2N/0YI5+kJos7v+qK5AEKugEWFfieM3aa8ob6sN2nMFSvOqLRliLJovs/gnJtGsVv4qL8"
+  },
+  {
+    "ParameterKey": "MasterInstanceProfileName",
+    "ParameterValue": "os46priv-secgrouproles-MasterInstanceProfile-X6DUVLDZA6AB"
+  },
+  {
+    "ParameterKey": "MasterInstanceType",
+    "ParameterValue": "m5.xlarge"
+  },
+  {
+    "ParameterKey": "AutoRegisterELB",
+    "ParameterValue": "yes"
+  },
+  {
+    "ParameterKey": "RegisterNlbIpTargetsLambdaArn",
+    "ParameterValue": "arn:aws-us-gov:lambda:us-gov-west-1:069490698157:function:os46priv-network-RegisterNlbIpTargets-19Y9F7I12QHVC"
+  },
+  {
+    "ParameterKey": "ExternalApiTargetGroupArn",
+    "ParameterValue": "arn:aws-us-gov:elasticloadbalancing:us-gov-west-1:069490698157:targetgroup/os46p-Exter-12WKLHSKDO5OI/7d985f066ab7ed0c"
+  },
+  {
+    "ParameterKey": "InternalApiTargetGroupArn",
+    "ParameterValue": "arn:aws-us-gov:elasticloadbalancing:us-gov-west-1:069490698157:targetgroup/os46p-Inter-DGDKVVOVR2DS/106c0321ea51f7c9"
+  },
+  {
+    "ParameterKey": "InternalServiceTargetGroupArn",
+    "ParameterValue": "arn:aws-us-gov:elasticloadbalancing:us-gov-west-1:069490698157:targetgroup/os46p-Inter-1C50FH33KJ83T/46a827ffe4049c4f"
+  }
+]
