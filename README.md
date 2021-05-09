@@ -8,6 +8,11 @@ clone this git repository before starting deploy openshift on a custom priviate 
    git clone https://github.com/ekambaraml/aws-cloudpakfordata
 ```
 
+
+
+
+
+
 ## Install Pre-Requisits
 - Install OpenShift Client(oc)
 - OpenShift Installer
@@ -18,6 +23,33 @@ clone this git repository before starting deploy openshift on a custom priviate 
   - s3
   - ec2
   Also add a security group that allow tcp/443 that these endpoints are assigned.
+
+#### Prepare the DNS
+
+OpenShift requires a valid DNS domain, you can get one from AWS Route53 or using existing domain and registrar. The DNS must be registered as a Public Hosted Zone in Route53. (Even if you plan to use an airgapped environment)
+
+#### Configuring AWS Account 
+
+- Configuring Route 53
+  https://docs.openshift.com/container-platform/4.6/installing/installing_aws/installing-aws-account.html#installing-aws-account
+
+  To install OpenShift Container Platform, the Amazon Web Services (AWS) account you use must have a dedicated public hosted zone in your Route 53 service. This  zone must be authoritative for the domain. The Route 53 service provides cluster DNS resolution and name lookup for external connections to the cluster.
+  
+  Create a public hosted zone for your domain or subdomain. See Creating a Public Hosted Zone in the AWS documentation.
+  ```
+  <cluster>.<ibmcp4d.com>
+  ```
+  
+  
+
+Please reference the Required AWS Infrastructure components to setup your AWS account before installing OpenShift 4.
+
+We suggest to create an AWS IAM user dedicated for OpenShift installation with permissions documented above. On the bastion host, configure your AWS user credential as environment variables:
+
+export AWS_ACCESS_KEY_ID=RKXXXXXXXXXXXXXXX
+export AWS_SECRET_ACCESS_KEY=LXXXXXXXXXXXXXXXXXX/ng
+export AWS_DEFAULT_REGION=us-east-2
+
 
 
 ## Setup Registry
