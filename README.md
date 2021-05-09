@@ -68,7 +68,15 @@ On Bastion Host
   Create a base domain in route53 to use the following cloudformation template.  Use domain configured for cluster to create a private route 53 domain, no content needed
 - I also found that I needed to use a bastion that had access to external apis in GovCloud (not all endpoint available in my config to private bastion).  In customer's environment, this may need to be handled
 
-
+#### 3.11 Create Network Stack
+  - Update the network.param.json
+  - Create network stack by running the command:
+    aws cloudformation create-stack --stack-name <clustername>-network --template-body file://network.template  --parameters file://network.param.json  --capabilities CAPABILITY_NAMED_IAM
+  
+  - Monitor for completion
+    aws cloudformation describe-stacks --stack-name <clustername>-network
+  
+  
 
 
 
