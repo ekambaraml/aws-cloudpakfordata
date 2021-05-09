@@ -2,7 +2,11 @@
 Deploying Cloud Pak for Data on AWS Cloud
 
 
-On Bastion Host
+- On Bastion Host
+clone this git repository before starting deploy openshift on a custom priviate AWS environment
+```
+   git clone https://github.com/ekambaraml/aws-cloudpakfordata
+```
 
 ## Install Pre-Requisits
 - Install OpenShift Client(oc)
