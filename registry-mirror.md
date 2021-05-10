@@ -1,0 +1,1 @@
+# OpenShift Registry Mirror Setup
