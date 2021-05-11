@@ -2,12 +2,31 @@
 Deploying Cloud Pak for Data on AWS Cloud
 
 
-- On Bastion Host
+## Bastion Host Setup
 clone this git repository before starting deploy openshift on a custom priviate AWS environment
 ```
    git clone https://github.com/ekambaraml/aws-cloudpakfordata
 ```
-
+- Install AWS Cli
+  https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
+  https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install
+  ```
+    yum install -y unzip
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip awscliv2.zip
+    sudo ./aws/install
+  ```
+  add /usr/local/bin into the PATH.
+  
+- Configure AWS client
+  
+  ```
+  aws configure
+  AWS Access Key ID [None]: <aws-access-key-id>
+  AWS Secret Access Key [None]: <aws-secret-access-key>
+  Default region name [None]: <ca-central-1>
+  Default output format [None]: json
+  ``
 
 
 
