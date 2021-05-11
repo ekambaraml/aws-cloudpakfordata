@@ -22,14 +22,28 @@ clone this git repository before starting deploy openshift on a custom priviate 
   
   ```
   aws configure
-  AWS Access Key ID [None]: <aws-access-key-id>
-  AWS Secret Access Key [None]: <aws-secret-access-key>
-  Default region name [None]: <ca-central-1>
-  Default output format [None]: json
-  ``
+    AWS Access Key ID [None]: <aws-access-key-id>
+    AWS Secret Access Key [None]: <aws-secret-access-key>
+    Default region name [None]: <ca-central-1>
+    Default output format [None]: json
+  ```
+- OpenShift Client/Installer
+  ```
+  ; Download OCP 4.6.27 installer and cli
+    wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.6.27/openshift-client-linux.tar.gz
+    wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.6.27/openshift-install-linux.tar.gz
 
+    tar xvf openshift-client-linux.tar.gz
+    cp oc /usr/bin
+    oc version
+    cp kubectl /usr/bin
+    kubectl  version
+ 
+    tar xvf openshift-install-linux.tar.gz
+    ./openshift-install  version
+  ```
 
-
+## Registry mirror for AirGap Install
 
 
 ## Install Pre-Requisits
