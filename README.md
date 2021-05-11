@@ -29,6 +29,9 @@ clone this git repository before starting deploy openshift on a custom priviate 
   ```
 - OpenShift Client/Installer
   ```
+  ; if wget is not installed already
+  yum install -y wget
+  
   ; Download OCP 4.6.27 installer and cli
     wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.6.27/openshift-client-linux.tar.gz
     wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.6.27/openshift-install-linux.tar.gz
@@ -42,8 +45,69 @@ clone this git repository before starting deploy openshift on a custom priviate 
     tar xvf openshift-install-linux.tar.gz
     ./openshift-install  version
   ```
+  
+- Download the OCP pull secrets
+
+  Login to your redhat subscription account and Download or copy your pull secret into bastion host. It is required for setting up registry mirror and Installations.
+
+  https://cloud.redhat.com/openshift/install/aws/installer-provisioned
+  
+  ![ScreenShot](https://github.com/ekambaraml/IBM-Cloud-Pak-for-Data/raw/main/images/ocp-pullsecret.png)
+  
+  Create pull-secret.txt
 
 ## Registry mirror for AirGap Install
+```
+; find current hostname
+hostname -f
+
+yum -y install podman httpd-tools
+mkdir -p /var/lib/libvirt/images/mirror-registry/{auth,certs,data}
+
+openssl req -newkey rsa:4096 -nodes -sha256   -keyout /var/lib/libvirt/images/mirror-registry/certs/domain.key   -x509 -days 365 -subj "/CN=ip-175-1-1-66.ca-central-1.compute.internal" -out /var/lib/libvirt/images/mirror-registry/certs/domain.crt
+cp -v /var/lib/libvirt/images/mirror-registry/certs/domain.crt /etc/pki/ca-trust/source/anchors/
+update-ca-trust
+htpasswd -bBc /var/lib/libvirt/images/mirror-registry/auth/htpasswd admin r3dh4t\!1
+```
+
+; Create internal registry service: /etc/systemd/system/mirror-registry.service Change REGISTRY_HTTP_ADDR in case you use different network
+```
+cat - > /etc/systemd/system/mirror-registry.service <<EOF
+[Unit]
+Description=Mirror registry (mirror-registry)
+After=network.target
+
+[Service]
+Type=simple
+TimeoutStartSec=5m
+
+
+ExecStartPre=-/usr/bin/podman rm "mirror-registry"
+ExecStartPre=/usr/bin/podman pull quay.io/redhat-emea-ssa-team/registry:2
+ExecStart=/usr/bin/podman run --name mirror-registry --net host \
+  -v /var/lib/libvirt/images/mirror-registry/data:/var/lib/registry:z \  
+  -v /var/lib/libvirt/images/mirror-registry/auth:/auth:z \
+  -e "REGISTRY_AUTH=htpasswd" \
+  -e "REGISTRY_HTTP_ADDR=172.31.14.217:5000" \
+  -e "REGISTRY_AUTH_HTPASSWD_REALM=registry-realm" \
+  -e "REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd" \
+  -e "REGISTRY_COMPATIBILITY_SCHEMA1_ENABLED=TRUE" \
+  -v /var/lib/libvirt/images/mirror-registry/certs:/certs:z \
+  -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
+  -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+  -e REGISTRY_COMPATIBILITY_SCHEMA1_ENABLED=true \
+  quay.io/redhat-emea-ssa-team/registry:2
+
+
+ExecReload=-/usr/bin/podman stop "mirror-registry"
+ExecReload=-/usr/bin/podman rm "mirror-registry"
+ExecStop=-/usr/bin/podman stop "mirror-registry"
+Restart=alwaysRestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
 
 
 ## Install Pre-Requisits
