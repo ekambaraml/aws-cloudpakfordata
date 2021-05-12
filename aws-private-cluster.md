@@ -219,7 +219,7 @@ sshKey:
 
 copy install-config.yaml tp clusterconfig directory and run the command
 ```
-openshift-install create manifests --dir clusterconfig
+./openshift-install create manifests --dir clusterconfig
 ```
 
 ## 4.5 Create Cluster
