@@ -168,6 +168,54 @@ GODEBUG=x509ignoreCN=0 oc adm -a ${LOCAL_SECRET_JSON} release mirror --from=quay
  ./openshift-install 4.6.27
  built from commit c47fb1296122a601bc578b9251ba1fb3c7dd4fd1
  ```
+ 
+ - save the output
+ 
+ ```
+ info: Mirroring completed in 56.69s (117.5MB/s)
+
+Success
+Update image:  ip-175-1-1-66.ca-central-1.compute.internal:5000/ocp4/openshift4:4.6.27-x86_64
+Mirror prefix: ip-175-1-1-66.ca-central-1.compute.internal:5000/ocp4/openshift4
+
+To use the new mirrored repository to install, add the following section to the install-config.yaml:
+
+imageContentSources:
+- mirrors:
+  - ip-175-1-1-66.ca-central-1.compute.internal:5000/ocp4/openshift4
+  source: quay.io/openshift-release-dev/ocp-release
+- mirrors:
+  - ip-175-1-1-66.ca-central-1.compute.internal:5000/ocp4/openshift4
+  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+
+
+To use the new mirrored repository for upgrades, use the following to create an ImageContentSourcePolicy:
+
+apiVersion: operator.openshift.io/v1alpha1
+kind: ImageContentSourcePolicy
+metadata:
+  name: example
+spec:
+  repositoryDigestMirrors:
+  - mirrors:
+    - ip-175-1-1-66.ca-central-1.compute.internal:5000/ocp4/openshift4
+    source: quay.io/openshift-release-dev/ocp-release
+  - mirrors:
+    - ip-175-1-1-66.ca-central-1.compute.internal:5000/ocp4/openshift4
+    source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+
+ ```
+ - Extract openshift-install command
+ ```
+ oc adm release extract -a pullsecret.json --command=openshift-install "${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE}"
+```
+- Check openshift-install version:
+```
+$ ./openshift-install version
+./openshift-install 4.6.27
+built from commit c47fb1296122a601bc578b9251ba1fb3c7dd4fd1
+release image ip-175-1-1-66.ca-central-1.compute.internal:5000/ocp4/openshift4@sha256:63545e67cc2af126e289de269ad59940e072af68f4f0cb9c37734f5374afeb60
+```
 ## Install Pre-Requisits
 - Install OpenShift Client(oc)
 - OpenShift Installer
