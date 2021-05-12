@@ -229,3 +229,7 @@ copy install-config.yaml tp clusterconfig directory and run the command
 ./openshift-install create  cluster  --dir clusterconfig --log-level=debug
 ```
 
+## 4.6 Destroy cluster and remove assets
+```
+./openshift-install destroy  cluster --dir clusterconfig --log-level=debug
+```
