@@ -1,4 +1,5 @@
-# Deploying with Cloudformation templates
+# Deploying OpenShift on user-provisioned infrastructure using AWS Cloudformation templates
+
 
 
 
