@@ -131,6 +131,16 @@ Refer section 1.0
 ```
 Update the install-config with your custom network details
 
+- [ ] Registry mirror details (if any)
+- [ ] baseDomain
+- [ ] Cluster Name
+- [ ] Region
+- [ ] Zones
+- [ ] machine Network
+- [ ] Subnets
+- [ ] pullsecrets
+- [ ] ssh-key
+
 ```
 apiVersion: v1
 baseDomain: ibmcp4d.com
