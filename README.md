@@ -108,8 +108,62 @@ Restart=alwaysRestartSec=30
 WantedBy=multi-user.target
 EOF
 ```
+```
+;; Enable and start mirror registry
+
+systemctl enable --now mirror-registry.service
+systemctl status mirror-registry.service
+systemctl daemon-reload
+```
+
+;; Validate registry
+
+```
+; Test by pushing sample image
+podman login -u admin -p r3dh4t\!1 ip-172-31-14-217.eu-west-2.compute.internal:5000
+podman pull busybox
+podman tag docker.io/library/busybox:latest ip-172-31-14-217.eu-west-2.compute.internal:5000/busybox:latest
+podman push ip-172-31-14-217.eu-west-2.compute.internal:5000/busybox:latest
 
 
+curl -u admin:r3dh4t\!1  https://ip-172-31-14-217.eu-west-2.compute.internal:5000/v2/_catalog  
+
+{"repositories":["busybox"]}
+
+;; Installing jq
+wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+chmod +x jq-linux64
+sudo cp jq-linux64 /usr/bin/jq
+```
+;; Create mirror registry pullsecret
+
+```
+export OCP_RELEASE=$(oc version -o json  --client | jq -r '.releaseClientVersion')
+export LOCAL_REGISTRY='ip-172-31-14-217.eu-west-2.compute.internal:5000'
+export LOCAL_REPOSITORY='ocp4/openshift4'
+export PRODUCT_REPO='openshift-release-dev'
+export LOCAL_SECRET_JSON='pullsecret.json'
+export RELEASE_NAME="4.6.27"
+export ARCHITECTURE=x86_64
+export RELEASE_NAME="ocp-release"
+oc version -o json  --client | jq -r '.releaseClientVersion'
+
+oc adm -a ${LOCAL_SECRET_JSON} release mirror --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
+
+oc adm -a ${LOCAL_SECRET_JSON} release mirror --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE}
+
+;; For certificate issue
+GODEBUG=x509ignoreCN=0 oc adm -a ${LOCAL_SECRET_JSON} release mirror --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} 
+
+
+ ;; Create Installer for Mirror Registry
+ GODEBUG=x509ignoreCN=0 oc adm release extract -a pullsecret.json --command=openshift-install "${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE}"
+
+ ./openshift-install version
+
+ ./openshift-install 4.6.27
+ built from commit c47fb1296122a601bc578b9251ba1fb3c7dd4fd1
+ ```
 ## Install Pre-Requisits
 - Install OpenShift Client(oc)
 - OpenShift Installer
