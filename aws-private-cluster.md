@@ -7,6 +7,9 @@ OpenShift 4.6, private cluster can be installed into an existing VPC on Amazon W
 - Private cluster sets the DNS, Ingress Controller, and API server to private when you deploy your cluster. This means that the cluster resources are only accessible from your internal network and are not visible to the internet.
 - To deploy a private cluster, you must use existing networking that meets your requirements. 
 
+
+Reference: https://docs.openshift.com/container-platform/4.6/installing/installing_aws/installing-aws-private.html
+
 ## 1.0 Bastion Host
 
   Private cluster must be deployed from a machine that has access 
