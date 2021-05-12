@@ -209,6 +209,6 @@ openshift-install create manifests --dir clusterconfig
 
 ## 4.5 Create Cluster
 ```
- ./openshift-install create manifests --dir clusterconfig --log-level=debug
+./openshift-install create  cluster  --dir clusterconfig --log-level=debug
 ```
 
