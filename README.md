@@ -54,7 +54,7 @@ clone this git repository before starting deploy openshift on a custom priviate 
   
   ![ScreenShot](https://github.com/ekambaraml/IBM-Cloud-Pak-for-Data/raw/main/images/ocp-pullsecret.png)
   
-  Create pull-secret.txt
+  Create redhat-pullsecret.json
 
 ## Registry mirror for AirGap Install
 ```
@@ -64,7 +64,8 @@ hostname -f
 yum -y install podman httpd-tools
 mkdir -p /var/lib/libvirt/images/mirror-registry/{auth,certs,data}
 
-openssl req -newkey rsa:4096 -nodes -sha256   -keyout /var/lib/libvirt/images/mirror-registry/certs/domain.key   -x509 -days 365 -subj "/CN=ip-175-1-1-66.ca-central-1.compute.internal" -out /var/lib/libvirt/images/mirror-registry/certs/domain.crt
+openssl req -newkey rsa:4096 -nodes -sha256   -keyout /var/lib/libvirt/images/mirror-registry/certs/domain.key   -x509 -days 365 -subj "/CN=ip-175-1-1-66.ca-central-1.compute.internal" -out /var/lib/libvirt/images/mirror-registry/certs/domain.crt -addext "subjectAltName = DNS:ip-175-1-1-66.ca-central-1.compute.internal"
+
 cp -v /var/lib/libvirt/images/mirror-registry/certs/domain.crt /etc/pki/ca-trust/source/anchors/
 update-ca-trust
 htpasswd -bBc /var/lib/libvirt/images/mirror-registry/auth/htpasswd admin r3dh4t\!1
@@ -136,7 +137,10 @@ chmod +x jq-linux64
 sudo cp jq-linux64 /usr/bin/jq
 ```
 ;; Create mirror registry pullsecret
+podman login --authfile mirror-registry-pullsecret.json ip-172-31-14-217.eu-west-2.compute.internal:5000
 
+;; merge pull-secrets
+jq -s '{"auths": ( .[0].auths + .[1].auths ) }' mirror-registry-pullsecret.json redhat-pullsecret.json > pullsecret.json
 ```
 export OCP_RELEASE=$(oc version -o json  --client | jq -r '.releaseClientVersion')
 export LOCAL_REGISTRY='ip-172-31-14-217.eu-west-2.compute.internal:5000'
