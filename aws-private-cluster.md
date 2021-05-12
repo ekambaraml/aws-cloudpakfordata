@@ -43,9 +43,104 @@ The installation program does use the baseDomain that you specify to create a pr
   * elasticloadbalancing.<region>.amazonaws.com
   * s3.<region>.amazonaws.com
 
-## 2.0 Installing OpenShift
+## 2.0 OpenShift Cluster
 
 AWS credentials that you use when you create your cluster do not need the networking permissions that are required to make VPCs and core networking components within the VPC, such as subnets, routing tables, Internet gateways, NAT, and VPN. 
 
 **You still need permission to make the application resources that the machines within the cluster require, such as ELBs, security groups, S3 buckets, and nodes**.
+
+## 3.0 Deploying the cluster
+
+### 3.1 Generating an SSH private key and adding it to the agent
+
+Key to SSH into the master nodes as the user core. When you deploy the cluster, the key is added to the core user’s ~/.ssh/authorized_keys list
+
+```
+ssh-keygen
+eval "$(ssh-agent -s)"
+ssh-add
+```
+
+### 3.2 Downloading openshift install files
+
+### 3.3 Creating the installation configuration file
+
+
+```
+./openshift-install create install-config --dir=./ocpconfig
+```
+
+```
+apiVersion: v1
+baseDomain: example.com 
+credentialsMode: Mint 
+controlPlane:   
+  hyperthreading: Enabled 
+  name: master
+  platform:
+    aws:
+      zones:
+      - us-west-2a
+      - us-west-2b
+      rootVolume:
+        iops: 4000
+        size: 500
+        type: io1 
+      type: m5.xlarge
+  replicas: 3
+compute: 
+- hyperthreading: Enabled 
+  name: worker
+  platform:
+    aws:
+      rootVolume:
+        iops: 2000
+        size: 500
+        type: io1 
+      type: c5.4xlarge
+      zones:
+      - us-west-2c
+  replicas: 3
+metadata:
+  name: test-cluster 
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 10.0.0.0/16
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  aws:
+    region: us-west-2 
+    userTags:
+      adminContact: jdoe
+      costCenter: 7536
+    subnets: 
+    - subnet-1
+    - subnet-2
+    - subnet-3
+    amiID: ami-96c6f8f7 
+    serviceEndpoints: 
+      - name: ec2
+        url: https://vpce-id.ec2.us-west-2.vpce.amazonaws.com
+fips: false 
+sshKey: ssh-ed25519 AAAA... 
+publish: Internal 
+pullSecret: '{"auths": ...}' 
+```
+
+## Create Manifest
+
+copy install-config.yaml tp clusterconfig directory and run the command
+```
+openshift-install create manifests --dir clusterconfig
+```
+
+## Create Cluster
+```
+ ./openshift-install create manifests --dir clusterconfig --log-level=debug
+```
 
