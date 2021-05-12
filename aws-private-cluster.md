@@ -100,7 +100,7 @@ The installation program does use the baseDomain that you specify to create a pr
   * ec2.<region>.amazonaws.com
   * elasticloadbalancing.<region>.amazonaws.com
   * s3.<region>.amazonaws.com
-  * ebs.ca-central-1.amazonaws.com
+  * ebs.<region>.amazonaws.com
 
 
 ## 3.0 OpenShift Cluster
