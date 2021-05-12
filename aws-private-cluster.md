@@ -141,6 +141,11 @@ Update the install-config with your custom network details
 - [ ] pullsecrets
 - [ ] ssh-key
 
+**It needs the pullsecret in single line. Use the following command to generate**
+```
+jq -c < pullsecret.json
+```
+
 ```
 apiVersion: v1
 baseDomain: ibmcp4d.com
