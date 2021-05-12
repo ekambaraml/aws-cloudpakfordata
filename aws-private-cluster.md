@@ -69,27 +69,22 @@ ssh-add
 ```
 ./openshift-install create install-config --dir=./ocpconfig
 ```
+Update the install-config with your custom network details
 
 ```
 apiVersion: v1
-baseDomain: example.com 
-credentialsMode: Mint 
-controlPlane:   
-  hyperthreading: Enabled 
-  name: master
-  platform:
-    aws:
-      zones:
-      - us-west-2a
-      - us-west-2b
-      rootVolume:
-        iops: 4000
-        size: 500
-        type: io1 
-      type: m5.xlarge
-  replicas: 3
-compute: 
-- hyperthreading: Enabled 
+baseDomain: ibmcp4d.com
+credentialsMode: Mint
+imageContentSources:
+- mirrors:
+  - ip-172-31-31-246.ca-central-1.compute.internal:5000/ocp4/openshift4
+  source: quay.io/openshift-release-dev/ocp-release
+- mirrors:
+  - ip-172-31-31-246.ca-central-1.compute.internal:5000/ocp4/openshift4
+  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+compute:
+- architecture: amd64
+  hyperthreading: Enabled
   name: worker
   platform:
     aws:
@@ -97,39 +92,52 @@ compute:
         iops: 2000
         size: 500
         type: io1 
-      type: c5.4xlarge
+      type: m5.4xlarge
       zones:
-      - us-west-2c
+      - ca-central-1a
+      - ca-central-1b
+  replicas: 3
+controlPlane:
+  architecture: amd64
+  hyperthreading: Enabled
+  name: master
+  platform: 
+    aws:
+      zones:
+      - ca-central-1a
+      - ca-central-1b
+      rootVolume:
+        iops: 4000
+        size: 500
+        type: io1 
+      type: m5.xlarge
   replicas: 3
 metadata:
-  name: test-cluster 
+  name: cxcbsa
 networking:
   clusterNetwork:
   - cidr: 10.128.0.0/14
     hostPrefix: 23
   machineNetwork:
-  - cidr: 10.0.0.0/16
+  - cidr: 175.1.1.0/24
+  - cidr: 175.1.2.0/24
+
   networkType: OpenShiftSDN
   serviceNetwork:
   - 172.30.0.0/16
 platform:
   aws:
-    region: us-west-2 
+    region: ca-central-1
     userTags:
-      adminContact: jdoe
-      costCenter: 7536
-    subnets: 
-    - subnet-1
-    - subnet-2
-    - subnet-3
-    amiID: ami-96c6f8f7 
-    serviceEndpoints: 
-      - name: ec2
-        url: https://vpce-id.ec2.us-west-2.vpce.amazonaws.com
-fips: false 
-sshKey: ssh-ed25519 AAAA... 
-publish: Internal 
-pullSecret: '{"auths": ...}' 
+      adminContact: cx-docker-admins
+    subnets:
+    - subnet-005e3317a91060135
+    - subnet-0f476ff45e891d8c0
+    amiID: ami-012518cdbd3057dfd
+fips: true
+publish: Internal
+pullSecret: ''
+sshKey: 
 ```
 
 ## Create Manifest
