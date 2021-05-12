@@ -135,13 +135,13 @@ curl -u admin:r3dh4t\!1  https://ip-172-31-14-217.eu-west-2.compute.internal:500
 wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
 chmod +x jq-linux64
 sudo cp jq-linux64 /usr/bin/jq
-```
+
 ;; Create mirror registry pullsecret
 podman login --authfile mirror-registry-pullsecret.json ip-172-31-14-217.eu-west-2.compute.internal:5000
 
 ;; merge pull-secrets
 jq -s '{"auths": ( .[0].auths + .[1].auths ) }' mirror-registry-pullsecret.json redhat-pullsecret.json > pullsecret.json
-```
+
 export OCP_RELEASE=$(oc version -o json  --client | jq -r '.releaseClientVersion')
 export LOCAL_REGISTRY='ip-172-31-14-217.eu-west-2.compute.internal:5000'
 export LOCAL_REPOSITORY='ocp4/openshift4'
