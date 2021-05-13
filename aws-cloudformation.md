@@ -32,9 +32,9 @@ S3 buckets | |
  component | count | Description 
 ----|----|----
 Loadbalancer| 2 | api and Application loadbalancer
-DNS records | 3 | api.<cluster>.<basedomain>, api-int.<cluster>.<basedomain>, *.apps.<cluster>.<basedomain>
-Master nodes | 3 | Control plane
-Worker nodes | 3+ | Compute nodes
+DNS records | 3 | ```api.<cluster>.<basedomain>,  api-int.<cluster>.<basedomain>,  *.apps.<cluster>.<basedomain>```
+Master nodes | 3 | Control plane (m5.xlarge)
+Worker nodes | 3+ | Compute nodes (m5.4xlarge)
 EBS/EFS Storage | |
 S3 Bucker | |
 
