@@ -82,6 +82,11 @@ mv <installation_directory>/manifests/cluster-dns-02-config.yml backup
 aws cloudformation create-stack --stack-name cluster-vpc --template-body  file://vpc.template.yaml --parameters file://vpc.param.json
 aws cloudformation describe-stacks --stack-name cluster-vpc
 ```
+- To Delete the cluster-vpc
+```
+aws cloudformation delete-stack --stack-name cluster-vpc
+
+```
 
 #### 3.2 Creating networking and load balancing components in AWS
 
@@ -92,7 +97,13 @@ aws route53 list-hosted-zones-by-name --dns-name
 
 
 ```
-aws cloudformation create-stack --stack-name 
+```
+aws cloudformation create-stack --stack-name cluster-vpc --template-body  file://vpc.template.yaml --parameters file://vpc.param.json
+aws cloudformation describe-stacks --stack-name cluster-vpc
+```
+- To Delete the cluster-vpc
+```
+aws cloudformation delete-stack --stack-name cluster-vpc
 
 
 
