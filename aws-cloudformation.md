@@ -1,9 +1,44 @@
 # Deploying OpenShift on user-provisioned infrastructure using AWS Cloudformation templates
 
 
+## 1.0 Requirements
 
 
 ### 2.0 Creating OpenShift Install configurations
+
+In this deployment model, we will create stacks of AWS resources that represent the following components:
+
+- An AWS Virtual Private Cloud (VPC)
+- Networking and load balancing components
+- Security groups and roles
+- An OpenShift Container Platform bootstrap node
+- OpenShift Container Platform control plane nodes
+- An OpenShift Container Platform compute node
+
+
+
+#### AWS Infrastructure components
+ component | count | Description 
+----|----|----
+VPC | 1 | Virutal Private Cloud 
+DNS entries | * |  
+Load balancers | |(classic or network) and listeners 
+Hosted Zone | | A public and a private Route 53 zone 
+Security groups | | 
+IAM roles | | 
+S3 buckets | | 
+
+#### OpenShift Components
+ component | count | Description 
+----|----|----
+Loadbalancer| 2 | api and Application loadbalancer
+DNS records | 3 | api.<cluster>.<basedomain>, api-int.<cluster>.<basedomain>, *.apps.<cluster>.<basedomain>
+Master nodes | 3 | Control plane
+Worker nodes | 3+ | Compute nodes
+EBS/EFS Storage | |
+S3 Bucker | |
+
+
 
 #### 2.1 Creating the installation files for AWS
 
