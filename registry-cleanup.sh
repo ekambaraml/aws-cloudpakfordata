@@ -1,13 +1,6 @@
 !/bin/bash
 
-# based on: https://gist.github.com/jaytaylor/86d5efaddda926a25fa68c263830dac1
-# changes: 
-# - iterate over tag list instead of using only first one
-# - added basic auth
-# - fixed http header to 'docker-content-digest'
 
-
-# exit when any command fails
 set -e
 PORTABLE_REGISTRY_USER=admin
 PORTABLE_REGISTRY_PASS=admin
