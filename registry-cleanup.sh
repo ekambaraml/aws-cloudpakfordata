@@ -7,7 +7,7 @@ PORTABLE_REGISTRY_PASS=admin
 PORTABLE_REGISTRY_URL='localhost:5000'
 
 # Get all images
-images=`curl -k -u $PORTABLE_REGISTRY_USER:$PORTABLE_REGISTRY_PASS https://${PORTABLE_REGISTRY_URL}/v2/_catalog?n=10000 | jq .repositories[]`
+images=$(curl -k -u $PORTABLE_REGISTRY_USER:$PORTABLE_REGISTRY_PASS https://${PORTABLE_REGISTRY_URL}/v2/_catalog?n=10000 | jq .repositories[])
 
 
 for image in $images; do
